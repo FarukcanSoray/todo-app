@@ -64,7 +64,25 @@ it('should render a due date input field with type date', async () => {
 	const input = getByTestId('create-task-due-date-input');
 	expect(input.getAttribute('type')).toBe('date');
 });
-it('should render a due date input field with correct name', async () => {
+it('should render a due date input field with the correct name', async () => {
 	const input = getByTestId('create-task-due-date-input');
 	expect(input.getAttribute('name')).toBe('dueDate');
+});
+it('should render a description input field', async () => {
+	const input = getByTestId('create-task-description-input');
+	expect(input.tagName).toBe('INPUT');
+});
+it('should render a description input field with type text', async () => {
+	const input = getByTestId('create-task-description-input');
+	expect(input.getAttribute('type')).toBe('text');
+});
+it('should render a description input field with the correct name', async () => {
+	const input = getByTestId('create-task-description-input');
+	expect(input.getAttribute('name')).toBe('description');
+});
+it('should render a description input field with the correct placeholder text', async () => {
+	const input = getByTestId('create-task-description-input');
+	expect(input.getAttribute('placeholder')).toBe(
+		translations.en['CreateTask.Form.Description.Placeholder']
+	);
 });

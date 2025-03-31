@@ -10,6 +10,7 @@
 		name="title"
 		required
 	/>
+	<input data-testid="create-task-due-date-input" type="date" name="dueDate" />
 	<button data-testid="create-task-submit-button" type="submit" disabled
 		>{t('CreateTask.Form.Submit.Label')}</button
 	>

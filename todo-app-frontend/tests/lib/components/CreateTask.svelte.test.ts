@@ -56,3 +56,15 @@ it('should render a title input field with the correct placeholder text', async 
 		translations.en['CreateTask.Form.Title.Placeholder']
 	);
 });
+it('should render a due date input field', async () => {
+	const input = getByTestId('create-task-due-date-input');
+	expect(input.tagName).toBe('INPUT');
+});
+it('should render a due date input field with type date', async () => {
+	const input = getByTestId('create-task-due-date-input');
+	expect(input.getAttribute('type')).toBe('date');
+});
+it('should render a due date input field with correct name', async () => {
+	const input = getByTestId('create-task-due-date-input');
+	expect(input.getAttribute('name')).toBe('dueDate');
+});

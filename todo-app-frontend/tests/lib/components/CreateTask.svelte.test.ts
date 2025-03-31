@@ -1,5 +1,5 @@
-import { render, type RenderResult } from '@testing-library/svelte';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { fireEvent, render, type RenderResult } from '@testing-library/svelte';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import CreateTask from '$lib/components/CreateTask.svelte';
 import { translations } from '$lib/translations';
 import userEvent from '@testing-library/user-event';
@@ -97,5 +97,23 @@ describe('CreateTask Component - Interactions', () => {
 		expect(button.disabled).toBe(true);
 		await userEvent.type(input, 'New Task Title');
 		expect(button.disabled).toBe(false);
+	});
+	it('should disable the submit button when the title input is cleared', async () => {
+		const input = getByTestId('create-task-title-input') as HTMLInputElement;
+		const button = getByTestId('create-task-submit-button') as HTMLButtonElement;
+		await userEvent.type(input, 'New Task Title');
+		expect(button.disabled).toBe(false);
+		await userEvent.clear(input);
+		expect(button.disabled).toBe(true);
+	});
+	it('should call the submit function when the form is submitted', async () => {
+		const form = getByTestId('create-task-form');
+		const input = getByTestId('create-task-title-input') as HTMLInputElement;
+		const mockSubmitHandler = vi.fn();
+		form.addEventListener('submit', mockSubmitHandler);
+		await userEvent.type(input, 'New Task Title');
+		await fireEvent.submit(form);
+		expect(mockSubmitHandler).toHaveBeenCalled();
+		expect(mockSubmitHandler).toHaveBeenCalledTimes(1);
 	});
 });

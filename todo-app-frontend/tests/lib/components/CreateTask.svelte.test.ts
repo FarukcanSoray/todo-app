@@ -1,8 +1,9 @@
-import { render } from '@testing-library/svelte';
+import { render, type RenderResult } from '@testing-library/svelte';
 import { beforeEach, expect, it } from 'vitest';
 import CreateTask from '$lib/components/CreateTask.svelte';
+import { translations } from '$lib/translations';
 
-let getByTestId;
+let getByTestId: RenderResult<typeof CreateTask>['getByTestId'];
 beforeEach(() => {
 	// Render the component before each test
 	({ getByTestId } = render(CreateTask));
@@ -27,10 +28,10 @@ it('should render a submit button with submit type', async () => {
 });
 it('should render a submit button with the correct name', async () => {
 	const button = getByTestId('create-task-submit-button');
-	expect(button.textContent).toBe('Submit');
+	expect(button.textContent).toBe(translations.en['CreateTask.Form.Submit.Label']);
 });
 it('should render a disabled submit button initially', async () => {
-	const button = getByTestId('create-task-submit-button');
+	const button = getByTestId('create-task-submit-button') as HTMLButtonElement;
 	expect(button.disabled).toBe(true);
 });
 it('should render a title input field', async () => {
@@ -46,10 +47,12 @@ it('should render a title input field with type text', async () => {
 	expect(input.getAttribute('type')).toBe('text');
 });
 it('should render a title input field as required', async () => {
-	const input = getByTestId('create-task-title-input');
+	const input = getByTestId('create-task-title-input') as HTMLInputElement;
 	expect(input.required).toBe(true);
 });
 it('should render a title input field with the correct placeholder text', async () => {
 	const input = getByTestId('create-task-title-input');
-	expect(input.getAttribute('placeholder')).toBe('Enter task title');
+	expect(input.getAttribute('placeholder')).toBe(
+		translations.en['CreateTask.Form.Title.Placeholder']
+	);
 });

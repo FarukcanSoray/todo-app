@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
+	let title = $state('');
+	let isButtonDisabled = $derived(!title.trim());
+	$effect(() => {
+		console.log('isButtonDisabled', isButtonDisabled);
+	});
 </script>
 
 <form data-testid="create-task-form">
@@ -8,6 +13,7 @@
 		type="text"
 		placeholder={t('CreateTask.Form.Title.Placeholder')}
 		name="title"
+		bind:value={title}
 		required
 	/>
 	<input
@@ -17,7 +23,7 @@
 		placeholder={t('CreateTask.Form.Description.Placeholder')}
 	/>
 	<input data-testid="create-task-due-date-input" type="date" name="dueDate" />
-	<button data-testid="create-task-submit-button" type="submit" disabled
+	<button data-testid="create-task-submit-button" type="submit" disabled={isButtonDisabled}
 		>{t('CreateTask.Form.Submit.Label')}</button
 	>
 </form>

@@ -116,4 +116,31 @@ describe('CreateTask Component - Interactions', () => {
 		expect(mockSubmitHandler).toHaveBeenCalled();
 		expect(mockSubmitHandler).toHaveBeenCalledTimes(1);
 	});
+	it('should disable the button when the form is submitted', async () => {
+		const title = getByTestId('create-task-title-input') as HTMLInputElement;
+		const description = getByTestId('create-task-description-input') as HTMLInputElement;
+		const dueDate = getByTestId('create-task-due-date-input') as HTMLInputElement;
+		const form = getByTestId('create-task-form');
+		const button = getByTestId('create-task-submit-button') as HTMLButtonElement;
+		await userEvent.type(title, 'New Task Title');
+		await userEvent.type(description, 'Task Description');
+		await userEvent.type(dueDate, '2025-04-01');
+		expect(button.disabled).toBe(false);
+		await fireEvent.submit(form);
+		expect(button.disabled).toBe(true);
+	});
+	it('should call the API and display a success message on successful task creation', async () => {
+		const title = getByTestId('create-task-title-input') as HTMLInputElement;
+		const description = getByTestId('create-task-description-input') as HTMLInputElement;
+		const dueDate = getByTestId('create-task-due-date-input') as HTMLInputElement;
+		const form = getByTestId('create-task-form');
+		const button = getByTestId('create-task-submit-button') as HTMLButtonElement;
+		await userEvent.type(title, 'New Task Title');
+		await userEvent.type(description, 'Task Description');
+		await userEvent.type(dueDate, '2025-04-01');
+		expect(button.disabled).toBe(false);
+		await fireEvent.submit(form);
+		const successMessage = getByTestId('success-message');
+		expect(successMessage).toBeTruthy();
+	});
 });

@@ -1,13 +1,18 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	let title = $state('');
-	let isButtonDisabled = $derived(!title.trim());
+	let isSubmitting = $state(false);
+	let isButtonDisabled = $derived(!title.trim() || isSubmitting);
+	const onsubmit = (e: Event) => {
+		e.preventDefault();
+		isSubmitting = true;
+	};
 	$effect(() => {
 		console.log('isButtonDisabled', isButtonDisabled);
 	});
 </script>
 
-<form data-testid="create-task-form">
+<form data-testid="create-task-form" {onsubmit}>
 	<input
 		data-testid="create-task-title-input"
 		type="text"
